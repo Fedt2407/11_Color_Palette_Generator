@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Colors</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Top 10 Colors in the Image</h1>
+    <ul>
+      {% for item in result %}
+      <li>
+        <div class="color-box" id="colorBox_{{ loop.index }}"></div>
+        <div class="color-info">
+          <p>RGB: {{ item.color }}</p>
+          <p>Percentage: {{ item.percentage }}%</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <script>
+      // Function to set the color of the color box
+      function setColor(index, color) {
+        const colorBox = document.getElementById(`colorBox_${index}`);
+        colorBox.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+      }
+
+      // Recupera i dati dai risultati Python
+      // const result = {{ result|tojson }};
+
+      // Imposta i colori per ogni risultato
+      result.forEach((item, index) => {
+        setColor(index + 1, item.color);
+      });
+    </script>
+  </body>
+</html>
