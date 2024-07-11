@@ -30,10 +30,10 @@
         colorBox.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
       }
 
-      // Recupera i dati dai risultati Python
+      // Recover the result from the server
       // const result = {{ result|tojson }};
 
-      // Imposta i colori per ogni risultato
+      // Sets the color of each color box
       result.forEach((item, index) => {
         setColor(index + 1, item.color);
       });
