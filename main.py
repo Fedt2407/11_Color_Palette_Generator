@@ -41,7 +41,7 @@ def upload():
         most_common_colors = counts.most_common(10)
         
         # Calculate total pixels
-        total_pixels = reshaped_img.shape[0]
+        total_pixels = len(reshaped_img)
 
         # Prepare the result data
         result_data = []
