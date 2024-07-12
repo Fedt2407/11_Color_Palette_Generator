@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 import numpy as np
 from PIL import Image
 from collections import Counter
-import io
 import os
 import webcolors
 
@@ -28,21 +27,28 @@ def upload():
     if file and allowed_file(file.filename):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
-        
+
         img = Image.open(file_path)
         img_array = np.array(img)
 
-        colors, counts = np.unique(img_array.reshape(-1, 3), axis=0, return_counts=True)
-        sorted_indices = np.argsort(-counts)[:10]
-        top_colors = colors[sorted_indices]
-        total_pixels = img_array.shape[0] * img_array.shape[1]
+        # Flatten the image array
+        reshaped_img = img_array.reshape(-1, img_array.shape[-1])
 
-        percentages = [(count / total_pixels) * 100 for count in counts[sorted_indices]]
+        # Count the occurrences of each color
+        counts = Counter(map(tuple, reshaped_img))
 
-        def rgb_to_hex(rgb_tuple):
-            return webcolors.rgb_to_hex(rgb_tuple)
+        # Get the 10 most common colors
+        most_common_colors = counts.most_common(10)
+        
+        # Calculate total pixels
+        total_pixels = reshaped_img.shape[0]
 
-        result_data = [{'color': rgb_to_hex(tuple(color)), 'percentage': round(percentage, 2)} for color, percentage in zip(top_colors, percentages)]
+        # Prepare the result data
+        result_data = []
+        for color, count in most_common_colors:
+            percentage = (count / total_pixels) * 100
+            hex_color = webcolors.rgb_to_hex(color)
+            result_data.append({'color': hex_color, 'percentage': round(percentage, 2)})
 
         return render_template('upload.html', result=result_data, image_path=file_path)
 
