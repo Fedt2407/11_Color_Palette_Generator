@@ -24,15 +24,17 @@
     <p>{{ error }}</p>
     {% endif %}
     <h1>Top 10 Colors in the Image</h1>
-    <img src="./static/uploads/flowers.jpeg" alt="Uploaded Image" />
+    <img src="" alt="Uploaded Image" />
     <ul>
       {% for item in result %}
       <li>
-        <div class="color-box" id="colorBox_{{ loop.index }}"></div>
-        <div class="color-info">
-          <p>RGB: {{ item.color }}</p>
-          <p>Percentage: {{ item.percentage }}%</p>
-        </div>
+        <div
+          class="color-box"
+          id="colorBox_{{ loop.index }}"
+          style="background-color: {{item.color}};"
+        ></div>
+        <p>{{ item.color }}</p>
+        <p class="percentage">{{ item.percentage }}%</p>
       </li>
       {% endfor %}
     </ul>

@@ -4,6 +4,7 @@ from PIL import Image
 from collections import Counter
 import io
 import os
+import webcolors
 
 app = Flask(__name__)
 
@@ -38,7 +39,10 @@ def upload():
 
         percentages = [(count / total_pixels) * 100 for count in counts[sorted_indices]]
 
-        result_data = [{'color': tuple(color), 'percentage': round(percentage, 2)} for color, percentage in zip(top_colors, percentages)]
+        def rgb_to_hex(rgb_tuple):
+            return webcolors.rgb_to_hex(rgb_tuple)
+
+        result_data = [{'color': rgb_to_hex(tuple(color)), 'percentage': round(percentage, 2)} for color, percentage in zip(top_colors, percentages)]
 
         return render_template('upload.html', result=result_data, image_path=file_path)
 

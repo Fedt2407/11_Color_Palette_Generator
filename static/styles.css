@@ -37,7 +37,7 @@ form input[type="submit"] {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #5cb85c;
+  background-color: #333;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -46,11 +46,11 @@ form input[type="submit"] {
 }
 
 form input[type="submit"]:hover {
-  background-color: #4cae4c;
+  background-color: #cda434;
 }
 
 p {
-  color: #d9534f;
+  color: #333;
   text-align: center;
   margin-top: 20px;
 }
@@ -82,7 +82,7 @@ li {
 }
 
 .color-box {
-  width: 50px;
+  width: 150px;
   height: 50px;
   margin-right: 10px;
   border-radius: 5px;
@@ -91,6 +91,13 @@ li {
 
 .color-info {
   display: flex;
+  align-items: center;
+}
+
+.percentage {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: auto;
 }
 
 .color-info p {
